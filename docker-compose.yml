@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: evolvo_db
+    restart: always
+    environment:
+      POSTGRES_USER: evolvo_user
+      POSTGRES_PASSWORD: evolvo_password
+      POSTGRES_DB: evolvo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: evolvo_backend
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://evolvo_user:evolvo_password@db:5432/evolvo
+      - SECRET_KEY=generate_a_secure_random_key_here
+      - FRONTEND_URL=http://localhost
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - backend_uploads:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: evolvo_frontend
+    restart: always
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: evolvo_nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  postgres_data:
+  backend_uploads:

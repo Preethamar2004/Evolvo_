@@ -1,0 +1,35 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+env/
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+
+# Uploads
+backend/uploads/
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Alembic
+backend/migrations/versions/
