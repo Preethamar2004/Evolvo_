@@ -6,7 +6,6 @@ services:
   - type: web
     name: evolvo-api
     env: python
-    region: ohio
     plan: free
     buildCommand: |
       cd backend
