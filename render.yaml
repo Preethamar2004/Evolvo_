@@ -1,11 +1,8 @@
-services:
-  # The PostgreSQL Database
-  - type: psql
-    name: evolvo-db
+databases:
+  - name: evolvo-db
     plan: free
-    version: 15
 
-  # The FastAPI Backend
+services:
   - type: web
     name: evolvo-api
     env: python
